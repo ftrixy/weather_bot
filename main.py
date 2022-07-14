@@ -1,5 +1,6 @@
 import requests
 import datetime
+import pytz
 from pprint import pprint
 from config import open_weather_token
 
@@ -20,6 +21,7 @@ def get_weather(city, open_weather_token):
         r = requests.get(
             f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={open_weather_token}&units=metric"
         )
+        tz_ukraine = pytz.timezone("Europe/Ukraine")
 
         data = r.json()
         pprint(data)
@@ -43,7 +45,7 @@ def get_weather(city, open_weather_token):
         length_of_the_day = datetime.datetime.fromtimestamp(data["sys"]["sunset"]) - datetime.datetime.fromtimestamp(
             data["sys"]["sunrise"])
 
-        print(f"\U0001F4C6 {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')} \U0000231A\n"
+        print(f"\U0001F4C6 {datetime.datetime.now(tz_ukraine).strftime('%Y-%m-%d %H:%M')} \U0000231A\n"
               "\n" 
               f"Погода в місті: {city}\n"
               "\n" 

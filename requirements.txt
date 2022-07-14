@@ -1,3 +1,4 @@
-requests
-datetime
-aiogram
+requests~=2.27.1
+datetime~=4.5
+aiogram~=2.21
+pytz~=2022.1
