@@ -1,5 +1,6 @@
 import requests
 import datetime
+import pytz
 import markup as nav
 from config import tg_bot_token, open_weather_token
 from aiogram import Bot, types
@@ -39,6 +40,7 @@ async def get_weather(message: types.Message):
         r = requests.get(
             f"http://api.openweathermap.org/data/2.5/weather?q={message.text}&appid={open_weather_token}&units=metric"
         )
+        tz_ukraine = pytz.timezone("Europe/Ukraine")
         data = r.json()
 
         city = data["name"]
@@ -60,7 +62,7 @@ async def get_weather(message: types.Message):
         length_of_the_day = datetime.datetime.fromtimestamp(data["sys"]["sunset"]) - datetime.datetime.fromtimestamp(
             data["sys"]["sunrise"])
 
-        await message.reply(f"\U0001F4C6 {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')} \U0000231A\n"
+        await message.reply(f"\U0001F4C6 {datetime.datetime.now(tz_ukraine).strftime('%Y-%m-%d %H:%M')} \U0000231A\n"
               "\n" 
               f"Погода в місті: {city}\n"
               "\n" 
